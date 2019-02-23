@@ -25,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Evently\\Limeremote\\": "src"
+            "Evently\\LimeRemote\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "evently\\LimeRemote\\Tests\\": "tests"
+            "Evently\\LimeRemote\\Tests\\": "tests"
         }
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace evently\LimeRemote\Tests;
+namespace Evently\LimeRemote\Tests;
 
 use PHPUnit\Framework\TestCase;
-use evently\LimeRemote\LimeRemote;
+use Evently\LimeRemote\LimeRemote;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\HandlerStack;
@@ -27,7 +27,7 @@ class LimeRemoteTest extends TestCase
               
         $remote = new LimeRemote('admin','password','http://limesurvey.test/admin/remotecontrol',null,false);
         $request = $remote->testRequest('test',['variables']);
-        dump($request);
+        // dump($request);
         $this->assertNotEmpty($request);
         
     }

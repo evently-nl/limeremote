@@ -1,9 +1,9 @@
 <?php
 
-namespace evently\LimeRemote;
+namespace Evently\LimeRemote;
 
-use evently\LimeRemote\Traits\LimesurveyRemoteHelperTrait;
-use evently\LimeRemote\Traits\LimesurveyRemoteTrait;
+use Evently\LimeRemote\Traits\LimesurveyRemoteHelperTrait;
+use Evently\LimeRemote\Traits\LimesurveyRemoteTrait;
 use Exception;
 use Graze\GuzzleHttp\JsonRpc\Client;
 

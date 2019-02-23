@@ -1,6 +1,6 @@
 <?php
 
-namespace evently\LimeRemote\Traits;
+namespace Evently\LimeRemote\Traits;
 
 
 trait LimesurveyRemoteTrait
