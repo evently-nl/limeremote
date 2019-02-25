@@ -21,16 +21,6 @@ class LimeRemoteTest extends TestCase
         
     }
 
-    /** @test */
-    public function it_can_send_a_generic_request()
-    {
-              
-        $remote = new LimeRemote('admin','password','http://limesurvey.test/admin/remotecontrol',null,false);
-        $request = $remote->testRequest('test',['variables']);
-        // dump($request);
-        $this->assertNotEmpty($request);
-        
-    }
 
 
 }

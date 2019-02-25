@@ -37,10 +37,4 @@ class LimeRemote
     }
 
 
-    public function testRequest($type, array $variables)
-    {
-            array_unshift($variables, $this->sessionKey);
-            return $variables;
-    }    
-
 }
