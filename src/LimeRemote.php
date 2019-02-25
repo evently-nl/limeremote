@@ -4,6 +4,8 @@ namespace Evently\LimeRemote;
 
 use Evently\LimeRemote\Traits\LimesurveyRemoteHelperTrait;
 use Evently\LimeRemote\Traits\LimesurveyRemoteTrait;
+use Evently\LimeRemote\Traits\LimesurveyRemoteCheckTrait;
+
 use Exception;
 use Graze\GuzzleHttp\JsonRpc\Client;
 
@@ -11,6 +13,8 @@ class LimeRemote
 {
     use LimesurveyRemoteTrait;
     use LimesurveyRemoteHelperTrait;
+    use LimesurveyRemoteCheckTrait;
+
     protected $username, $password, $url, $limesurveyId, $debug, $client, $sessionKey;
 
     /**
@@ -37,28 +41,6 @@ class LimeRemote
     {
             array_unshift($variables, $this->sessionKey);
             return $variables;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-    protected function createDefaultRequest($type, array $variables)
-    {
-        array_unshift($variables, $this->sessionKey);
-        return $this->client->request(1, $type, $variables);
-    }
-
-    protected function isLimesurveyIdSet()
-    {
-        return (!isset($this->limesurveyId)) ? false : true;
-    }
+    }    
 
 }

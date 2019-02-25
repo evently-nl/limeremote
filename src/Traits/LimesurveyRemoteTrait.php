@@ -19,6 +19,11 @@ trait LimesurveyRemoteTrait
         return $result->getRpcResult();
     }
 
+    protected function createDefaultRequest($type, array $variables)
+    {
+        array_unshift($variables, $this->sessionKey);
+        return $this->client->request(1, $type, $variables);
+    }
 
     /**
      * @param int|NULL $surveyId
