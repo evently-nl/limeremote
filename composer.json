@@ -18,7 +18,7 @@
     ],
     "require": {
         "graze/guzzle-jsonrpc": "^3.2",
-        "nesbot/carbon": "^1.24.1"
+        "nesbot/carbon": "1.24.1 - 2"
     },
     "require-dev": {
         "phpunit/phpunit": "~6.0"
