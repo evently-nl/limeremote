@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a5aca4bea9c8dd97d89ad2ca88a8bf9e",
+    "content-hash": "d2bca7a4806b38477fccd6fd07f406a0",
     "packages": [
         {
             "name": "graze/guzzle-jsonrpc",
