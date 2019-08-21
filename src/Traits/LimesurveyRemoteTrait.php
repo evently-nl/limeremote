@@ -89,7 +89,7 @@ trait LimesurveyRemoteTrait
      * @param boolean $createToken
      * @return mixed
      */
-    public function addParticipants(array $participantData, boolean $createToken=NULL)
+    public function addParticipants(array $participantData, bool $createToken=NULL)
     {
         if(!$this->isLimesurveyIdSet())
         {
@@ -496,7 +496,7 @@ trait LimesurveyRemoteTrait
      * @param boolean|NULL $email
      * @return mixed
      */
-    public function inviteParticipants(array $tokenIds = NULL, boolean $email = NULL)
+    public function inviteParticipants(array $tokenIds = NULL,bool $email = NULL)
     {
         if(!$this->isLimesurveyIdSet())
         {
@@ -529,7 +529,7 @@ trait LimesurveyRemoteTrait
      * @param array $conditions
      * @return mixed
      */
-    public function listParticipants(int $start, int $limit, boolean $unused = NULL, array $attributes = NULL, array $conditions = NULL)
+    public function listParticipants(int $start, int $limit, bool $unused = NULL, array $attributes = NULL, array $conditions = NULL)
     {
         if(!$this->isLimesurveyIdSet())
         {
