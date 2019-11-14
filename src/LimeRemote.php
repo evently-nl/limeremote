@@ -36,5 +36,9 @@ class LimeRemote
         $this->sessionKey = $this->getSessionKey();
     }
 
+    public function setLimesurveyId ($sid)
+    {
+        $this->limesurveyId = $sid;
+    }
 
 }
