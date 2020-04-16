@@ -45,6 +45,7 @@ trait LimesurveyRemoteTrait
         {
             return array('error'=>'Limesurvey Id not set');
         }
+        $attributes = ($attributes) ? $attributes : array();
         $request = $this->createDefaultRequest('activate_tokens',[$this->limesurveyId, $attributes]);
         $result = $this->client->send($request);
         return $result->getRpcResult();
