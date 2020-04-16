@@ -466,7 +466,7 @@ trait LimesurveyRemoteTrait
      * @param string|NULL $newQuestionHelp
      * @return mixed
      */
-    public function importQuestion(int $groupId, string $importData, string $mandatory = NULL, string $newQuestionTitle = NULL, string $newqQuestion = NULL, string $newQuestionHelp = NULL)
+    public function importQuestion(int $groupId, string $importData, string $sImportDataType, string $mandatory = NULL, string $newQuestionTitle = NULL, string $newqQuestion = NULL, string $newQuestionHelp = NULL)
     {
         if(!$this->isLimesurveyIdSet())
         {
