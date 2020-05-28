@@ -352,7 +352,7 @@ trait LimesurveyRemoteTrait
      * @param string $language
      * @return mixed
      */
-    public function getQuestionProperties(int $questionID, array $questionSettings, string $language)
+    public function getQuestionProperties(int $questionID, array $questionSettings = null, string $language = null)
     {
         $request = $this->createDefaultRequest('get_question_properties',[$questionID, $questionSettings, $language]);
         $result = $this->client->send($request);
