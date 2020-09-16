@@ -17,7 +17,6 @@
         }
     ],
     "require": {
-        "graze/guzzle-jsonrpc": "^3.2",
         "nesbot/carbon": "^1.26.3 || ^2.0"
     },
     "require-dev": {
