@@ -1,36 +1,36 @@
 {
-    "name": "evently/limeremote",
-    "description": "Limesurvey Remote Control package",
-    "keywords": [
-        "evently",
-        "limeremote",
-        "Laravel",
-        "Limesurvey"
-    ],
-    "homepage": "https://github.com/evently/limeremote",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Stefan Verweij",
-            "email": "stefan@evently.nl",
-            "homepage": "https://evently.nl"
-        }
-    ],
-    "require": {
-        "graze/guzzle-jsonrpc": "^3.2",
-        "nesbot/carbon": "^1.26.3 || ^2.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "~6.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Evently\\LimeRemote\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Evently\\LimeRemote\\Tests\\": "tests"
-        }
+  "name": "evently/limeremote",
+  "description": "Limesurvey Remote Control package",
+  "keywords": [
+    "evently",
+    "limeremote",
+    "Laravel",
+    "Limesurvey"
+  ],
+  "homepage": "https://github.com/evently/limeremote",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Stefan Verweij",
+      "email": "stefan@evently.nl",
+      "homepage": "https://evently.nl"
     }
+  ],
+  "require": {
+    "nesbot/carbon": "^1.26.3 || ^2.0",
+    "evently/guzzle-jsonrpc": "^3.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Evently\\LimeRemote\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Evently\\LimeRemote\\Tests\\": "tests"
+    }
+  }
 }
