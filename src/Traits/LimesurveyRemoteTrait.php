@@ -2,70 +2,69 @@
 
 namespace Evently\LimeRemote\Traits;
 
-
 trait LimesurveyRemoteTrait
 {
     public function getSessionKey()
     {
-        $request = $this->client->request(1, 'get_session_key', [$this->username, $this->password]);
-        $result =  $this->client->send($request);
-        return $result->getRpcResult();
+        $request = ['get_session_key', [$this->username, $this->password]];
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     public function releaseSessionKey()
     {
-        $request = $this->client->request(1, 'release_session_key', [$this->sessionKey]);
-        $result =  $this->client->send($request);
-        return $result->getRpcResult();
-    }
+        $request = ['release_session_key', [$this->sessionKey]];
+        $result = $this->client->call($request);
 
-    
-
-    /**
-     * @param int|NULL $surveyId
-     * @return mixed
-     */
-    public function activateSurvey(int $surveyId = NULL)
-    {
-        $surveyId = (!$surveyId) ? $this->limesurveyId : $surveyId;
-        $request = $this->createDefaultRequest('activate_survey',[$surveyId]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        return $result;
     }
 
     /**
-     * @param int|NULL $surveyId
-     * @param array|NULL $attributes
+     * @param int|null $surveyId
      * @return mixed
      */
-    public function activateTokens(array $attributes = NULL)
+    public function activateSurvey(int $surveyId = null)
     {
+        $surveyId = (! $surveyId) ? $this->limesurveyId : $surveyId;
+        $request = $this->createDefaultRequest('activate_survey', [$surveyId]);
+        $result = $this->client->call($request);
 
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        return $result;
+    }
+
+    /**
+     * @param int|null $surveyId
+     * @param array|null $attributes
+     * @return mixed
+     */
+    public function activateTokens(array $attributes = null)
+    {
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $attributes = ($attributes) ? $attributes : array();
-        $request = $this->createDefaultRequest('activate_tokens',[$this->limesurveyId, $attributes]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $attributes = ($attributes) ? $attributes : [];
+        $request = $this->createDefaultRequest('activate_tokens', [$this->limesurveyId, $attributes]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
-     * @param int|NULL $surveyId
+     * @param int|null $surveyId
      * @param string $groupTitle
-     * @param string|NULL $groupDescription
+     * @param string|null $groupDescription
      * @return mixed
      */
-    public function addGroup( string $groupTitle, string $groupDescription = NULL)
+    public function addGroup(string $groupTitle, string $groupDescription = null)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('add_group',[$this->limesurveyId, $groupTitle, $groupDescription]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('add_group', [$this->limesurveyId, $groupTitle, $groupDescription]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -74,33 +73,32 @@ trait LimesurveyRemoteTrait
      */
     public function addLanguage(string $language)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('add_language',[$this->limesurveyId, $language]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('add_language', [$this->limesurveyId, $language]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
-     * $participantData example: [ {"email":"me@example.com","lastname":"Bond","firstname":"James"},{"email":"me2@example.com","attribute_1":"example"} ]
+     * $participantData example: [ {"email":"me@example.com","lastname":"Bond","firstname":"James"},{"email":"me2@example.com","attribute_1":"example"} ].
      *
      * @param array $participantData
-     * @param boolean $createToken
+     * @param bool $createToken
      * @return mixed
      */
-    public function addParticipants(array $participantData, bool $createToken=NULL)
+    public function addParticipants(array $participantData, bool $createToken = null)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('add_participants',[$this->limesurveyId, $participantData, $createToken]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
-    }
+        $request = $this->createDefaultRequest('add_participants', [$this->limesurveyId, $participantData, $createToken]);
+        $result = $this->client->call($request);
 
+        return $result;
+    }
 
     /**
      * @param array $responseData
@@ -108,27 +106,28 @@ trait LimesurveyRemoteTrait
      */
     public function addResponse(array $responseData)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('add_response',[$this->limesurveyId, $responseData]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('add_response', [$this->limesurveyId, $responseData]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
-     * @param int|NULL $surveyId
+     * @param int|null $surveyId
      * @param string $surveyTitle
      * @param string $surveyLanguage
      * @param string $format
      * @return mixed int|array The response ID or array with error message
      */
-    public function addSurvey(int $surveyId = NULL, string $surveyTitle, string  $surveyLanguage, string $format )
+    public function addSurvey(int $surveyId = null, string $surveyTitle, string $surveyLanguage, string $format)
     {
-        $request = $this->createDefaultRequest('add_survey',[$surveyId, $surveyTitle, $surveyLanguage, $format]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('add_survey', [$surveyId, $surveyTitle, $surveyLanguage, $format]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -137,13 +136,13 @@ trait LimesurveyRemoteTrait
      */
     public function copySurvey(string $newName)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('copy_survey',[$this->limesurveyId, $newName]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('copy_survey', [$this->limesurveyId, $newName]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -152,19 +151,21 @@ trait LimesurveyRemoteTrait
      */
     public function cpd_importParticipants(array $particiants)
     {
-        $request = $this->createDefaultRequest('cpd_importParticipants',[$particiants]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('cpd_importParticipants', [$particiants]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
+
     public function deleteGroup(int $groupID)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('delete_group',[$this->limesurveyId, $groupID]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('delete_group', [$this->limesurveyId, $groupID]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -173,13 +174,13 @@ trait LimesurveyRemoteTrait
      */
     public function deleteLanguage(string $language)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('delete_language',[$this->limesurveyId, $language]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('delete_language', [$this->limesurveyId, $language]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -188,13 +189,13 @@ trait LimesurveyRemoteTrait
      */
     public function deleteParticipants(array $tokenIds)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('delete_participants',[$this->limesurveyId, $tokenIds]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('delete_participants', [$this->limesurveyId, $tokenIds]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -203,9 +204,10 @@ trait LimesurveyRemoteTrait
      */
     public function deleteQuestion(int $questionId)
     {
-        $request = $this->createDefaultRequest('delete_question',[$questionId]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('delete_question', [$questionId]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -213,76 +215,76 @@ trait LimesurveyRemoteTrait
      */
     public function deleteSurvey()
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('delete_survey',[$this->limesurveyId]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('delete_survey', [$this->limesurveyId]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
      * @param string $documentType
-     * @param string|NULL $languageCode
-     * @param string|NULL $completionStatus
-     * @param string|NULL $headingType
-     * @param string|NULL $responseType
-     * @param int|NULL $fromResponseId
-     * @param int|NULL $toResponseId
-     * @param array|NULL $fields
+     * @param string|null $languageCode
+     * @param string|null $completionStatus
+     * @param string|null $headingType
+     * @param string|null $responseType
+     * @param int|null $fromResponseId
+     * @param int|null $toResponseId
+     * @param array|null $fields
      * @return mixed
      */
-    public function exportResponses(string $documentType, string $languageCode = NULL, string $completionStatus = NULL, string $headingType = NULL, string $responseType = NULL, int $fromResponseId = NULL, int $toResponseId = NULL, array $fields = NULL)
+    public function exportResponses(string $documentType, string $languageCode = null, string $completionStatus = null, string $headingType = null, string $responseType = null, int $fromResponseId = null, int $toResponseId = null, array $fields = null)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('export_responses',[$this->limesurveyId, $documentType, $languageCode, $completionStatus, $headingType, $responseType, $fromResponseId, $toResponseId, $fields]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('export_responses', [$this->limesurveyId, $documentType, $languageCode, $completionStatus, $headingType, $responseType, $fromResponseId, $toResponseId, $fields]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
-     * @param string|NULL $documentType
+     * @param string|null $documentType
      * @param string $token
-     * @param string|NULL $languageCode
-     * @param string|NULL $completionStatus
-     * @param string|NULL $headingType
-     * @param string|NULL $responseType
-     * @param int|NULL $fromResponseId
-     * @param int|NULL $toResponseId
-     * @param array|NULL $fields
+     * @param string|null $languageCode
+     * @param string|null $completionStatus
+     * @param string|null $headingType
+     * @param string|null $responseType
+     * @param int|null $fromResponseId
+     * @param int|null $toResponseId
+     * @param array|null $fields
      * @return mixed
      */
-    public function exportResponsesByToken( string $documentType, string $token, string $languageCode = NULL, string $completionStatus = NULL, string $headingType = NULL, string $responseType = NULL, int $fromResponseId = NULL, int $toResponseId = NULL, array $fields = NULL)
+    public function exportResponsesByToken(string $documentType, string $token, string $languageCode = null, string $completionStatus = null, string $headingType = null, string $responseType = null, int $fromResponseId = null, int $toResponseId = null, array $fields = null)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('export_responses_by_token',[$this->limesurveyId, $documentType, $token, $languageCode, $completionStatus, $headingType, $responseType, $fromResponseId, $toResponseId, $fields]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('export_responses_by_token', [$this->limesurveyId, $documentType, $token, $languageCode, $completionStatus, $headingType, $responseType, $fromResponseId, $toResponseId, $fields]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
-     * @param string|NULL $docType
-     * @param string|NULL $language
-     * @param string|NULL $graph
-     * @param NULL $groupIds
+     * @param string|null $docType
+     * @param string|null $language
+     * @param string|null $graph
+     * @param null $groupIds
      * @return mixed
      */
-    public function exportStatistics(string $docType = NULL, string $language = NULL, string $graph = NULL, $groupIds = NULL)
+    public function exportStatistics(string $docType = null, string $language = null, string $graph = null, $groupIds = null)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('export_statistics',[$this->limesurveyId, $docType, $language, $graph, $groupIds]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('export_statistics', [$this->limesurveyId, $docType, $language, $graph, $groupIds]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -293,13 +295,13 @@ trait LimesurveyRemoteTrait
      */
     public function exportTimeline(string $type, string $start, string $end)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('export_timeline',[$this->limesurveyId, $type, $start, $end]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('export_timeline', [$this->limesurveyId, $type, $start, $end]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -310,24 +312,25 @@ trait LimesurveyRemoteTrait
     public function getGroupProperties(int $groupId, array $groupSettings)
     {
         $request = $this->createDefaultRequest('get_group_properties', [$groupId, $groupSettings]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
-     * @param array|NULL $surveyLocaleSettings   Properties to get, default to all attributes
-     * @param string|NULL $lang  Language to use, default to Survey->language
+     * @param array|null $surveyLocaleSettings   Properties to get, default to all attributes
+     * @param string|null $lang  Language to use, default to Survey->language
      * @return mixed
      */
-    public function getLanguageProperties(array $surveyLocaleSettings = NULL, string $lang = NULL)
+    public function getLanguageProperties(array $surveyLocaleSettings = null, string $lang = null)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('get_language_properties',[$this->limesurveyId, $surveyLocaleSettings, $lang]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('get_language_properties', [$this->limesurveyId, $surveyLocaleSettings, $lang]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -337,13 +340,13 @@ trait LimesurveyRemoteTrait
      */
     public function getParticipantProperties(array $tokenQueryProperties, array $tokenProperties)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('get_participant_properties',[$this->limesurveyId, $tokenQueryProperties, $tokenProperties]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('get_participant_properties', [$this->limesurveyId, $tokenQueryProperties, $tokenProperties]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -354,9 +357,10 @@ trait LimesurveyRemoteTrait
      */
     public function getQuestionProperties(int $questionID, array $questionSettings = null, string $language = null)
     {
-        $request = $this->createDefaultRequest('get_question_properties',[$questionID, $questionSettings, $language]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('get_question_properties', [$questionID, $questionSettings, $language]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -366,9 +370,10 @@ trait LimesurveyRemoteTrait
      */
     public function getResponseIds(int $surveyID, string $token)
     {
-        $request = $this->createDefaultRequest('get_response_ids',[$surveyID, $token]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('get_response_ids', [$surveyID, $token]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     //get session key -> see top
@@ -379,13 +384,14 @@ trait LimesurveyRemoteTrait
      */
     public function getSiteSettings(string $setttingName)
     {
-        $request = $this->createDefaultRequest('get_site_settings',[$setttingName]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('get_site_settings', [$setttingName]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
-     * @param string|NULL $statName defaults to all stats
+     * @param string|null $statName defaults to all stats
      * Available stats:
      * For Survey stats
      *     completed_responses
@@ -399,30 +405,30 @@ trait LimesurveyRemoteTrait
      *     token_completed
      * @return mixed
      */
-    public function getSummary(string $statName = NULL)
+    public function getSummary(string $statName = null)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('get_summary',[$this->limesurveyId, $statName]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('get_summary', [$this->limesurveyId, $statName]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
-     * @param array|NULL $surveySettings
+     * @param array|null $surveySettings
      * @return mixed
      */
-    public function getSurveyProperties(array $surveySettings = NULL)
+    public function getSurveyProperties(array $surveySettings = null)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('get_survey_properties',[$this->limesurveyId, $surveySettings]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('get_survey_properties', [$this->limesurveyId, $surveySettings]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -431,81 +437,82 @@ trait LimesurveyRemoteTrait
      */
     public function getUploadedFiles(string $token)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('get_uploaded_files',[$this->limesurveyId, $token]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('get_uploaded_files', [$this->limesurveyId, $token]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
      * @param string $importData string containing the BASE 64 encoded data of a lsg,csv
      * @param string $importDataType lsg,csv
-     * @param string|NULL $newGroupName
-     * @param string|NULL $newGroupDescription
+     * @param string|null $newGroupName
+     * @param string|null $newGroupDescription
      * @return mixed
      */
-    public function importGroup($importData , string $importDataType, string $newGroupName = NULL, string $newGroupDescription = NULL)
+    public function importGroup($importData, string $importDataType, string $newGroupName = null, string $newGroupDescription = null)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('import_group',[$this->limesurveyId,$importData, $importDataType, $newGroupName, $newGroupDescription ]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('import_group', [$this->limesurveyId, $importData, $importDataType, $newGroupName, $newGroupDescription]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
      * @param int $groupId
      * @param string $importData
-     * @param string|NULL $mandatory
-     * @param string|NULL $newQuestionTitle
-     * @param string|NULL $newqQuestion
-     * @param string|NULL $newQuestionHelp
+     * @param string|null $mandatory
+     * @param string|null $newQuestionTitle
+     * @param string|null $newqQuestion
+     * @param string|null $newQuestionHelp
      * @return mixed
      */
-    public function importQuestion(int $groupId, string $importData, string $sImportDataType, string $mandatory = NULL, string $newQuestionTitle = NULL, string $newqQuestion = NULL, string $newQuestionHelp = NULL)
+    public function importQuestion(int $groupId, string $importData, string $sImportDataType, string $mandatory = null, string $newQuestionTitle = null, string $newqQuestion = null, string $newQuestionHelp = null)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('import_question',[$this->limesurveyId, $groupId, $importData, 'lsq', $mandatory, $newQuestionTitle, $newqQuestion, $newQuestionHelp  ]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('import_question', [$this->limesurveyId, $groupId, $importData, 'lsq', $mandatory, $newQuestionTitle, $newqQuestion, $newQuestionHelp]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
      * @param string $importData    String containing the BASE 64 encoded data of a lss, csv, txt or survey lsa archive
      * @param string $importDataType    lss, csv, txt or lsa
-     * @param string|NULL $newSurveyName
-     * @param int|NULL $destSurveyID
+     * @param string|null $newSurveyName
+     * @param int|null $destSurveyID
      * @return mixed
      */
-    public function importSurvey(string $importData, string $importDataType, string $newSurveyName = NULL, int $destSurveyID = NULL)
+    public function importSurvey(string $importData, string $importDataType, string $newSurveyName = null, int $destSurveyID = null)
     {
-        $request = $this->createDefaultRequest('import_survey',[$importData, $importDataType, $newSurveyName, $destSurveyID]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('import_survey', [$importData, $importDataType, $newSurveyName, $destSurveyID]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
-     * @param array|NULL $tokenIds
-     * @param boolean|NULL $email
+     * @param array|null $tokenIds
+     * @param bool|null $email
      * @return mixed
      */
-    public function inviteParticipants(array $tokenIds = NULL,bool $email = NULL)
+    public function inviteParticipants(array $tokenIds = null, bool $email = null)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('invite_participants',[$this->limesurveyId,$tokenIds, $email]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('invite_participants', [$this->limesurveyId, $tokenIds, $email]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -513,107 +520,106 @@ trait LimesurveyRemoteTrait
      */
     public function listGroups()
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('list_groups',[$this->limesurveyId]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('list_groups', [$this->limesurveyId]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
      * @param int $start
      * @param int $limit
-     * @param boolean|NULL $unused
-     * @param array|NULL $attributes
+     * @param bool|null $unused
+     * @param array|null $attributes
      * @param array $conditions
      * @return mixed
      */
-    public function listParticipants(int $start, int $limit, bool $unused = NULL, array $attributes = NULL, array $conditions = NULL)
+    public function listParticipants(int $start, int $limit, bool $unused = null, array $attributes = null, array $conditions = null)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('list_participants',[$this->limesurveyId, $start, $limit, $unused, $attributes, $conditions]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('list_participants', [$this->limesurveyId, $start, $limit, $unused, $attributes, $conditions]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
-
     /**
-     * @param integer $groupId
+     * @param int $groupId
      * @param string $language
      * @return mixed
      */
-    public function listQuestions(int $groupId=NULL, string $language=NULL)
+    public function listQuestions(int $groupId = null, string $language = null)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('list_questions', [$this->limesurveyId,$groupId,$language]);
-        $result =  $this->client->send($request);
-        return $result->getRpcResult();
-    }
+        $request = $this->createDefaultRequest('list_questions', [$this->limesurveyId, $groupId, $language]);
+        $result = $this->client->call($request);
 
-
-    /**
-     * @param string|NULL $username
-     * @return mixed
-     */
-    public function listSurveys(string $username = NULL)
-    {
-        $request = $this->createDefaultRequest('list_surveys',[$username]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        return $result;
     }
 
     /**
-     * @param int|NULL $uid
+     * @param string|null $username
      * @return mixed
      */
-    public function listUsers(int $uid = NULL)
+    public function listSurveys(string $username = null)
     {
-        $request = $this->createDefaultRequest('list_users',[$uid]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('list_surveys', [$username]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
-     * @param array|NULL $overrideAllConditions
+     * @param int|null $uid
      * @return mixed
      */
-    public function mailRegisteredParticipants(array $overrideAllConditions = NULL)
+    public function listUsers(int $uid = null)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        $request = $this->createDefaultRequest('list_users', [$uid]);
+        $result = $this->client->call($request);
+
+        return $result;
+    }
+
+    /**
+     * @param array|null $overrideAllConditions
+     * @return mixed
+     */
+    public function mailRegisteredParticipants(array $overrideAllConditions = null)
+    {
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('mail_registered_participants',[$this->limesurveyId, $overrideAllConditions]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('mail_registered_participants', [$this->limesurveyId, $overrideAllConditions]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
 //    releaseSessionKey -> see top
 
-
     /**
-     * @param int|NULL $minDaysBetween
-     * @param int|NULL $maxReminders
-     * @param array|NULL $tokenIds
+     * @param int|null $minDaysBetween
+     * @param int|null $maxReminders
+     * @param array|null $tokenIds
      * @return mixed
      */
-    public function remindParticipants(int $minDaysBetween = NULL, int $maxReminders = NULL, array $tokenIds = NULL)
+    public function remindParticipants(int $minDaysBetween = null, int $maxReminders = null, array $tokenIds = null)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('remind_participants',[$this->limesurveyId, $minDaysBetween, $maxReminders, $tokenIds]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('remind_participants', [$this->limesurveyId, $minDaysBetween, $maxReminders, $tokenIds]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -623,48 +629,51 @@ trait LimesurveyRemoteTrait
      */
     public function setGroupProperties(int $groupID, array $groupData)
     {
-        $request = $this->createDefaultRequest('set_group_properties',[$groupID, $groupData]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('set_group_properties', [$groupID, $groupData]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
      * @param array $surveyLocaleData
-     * @param string|NULL $language
+     * @param string|null $language
      * @return mixed
      */
-    public function setLanguageProperties(array $surveyLocaleData, string $language = NULL)
+    public function setLanguageProperties(array $surveyLocaleData, string $language = null)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('set_language_properties',[$this->limesurveyId, $surveyLocaleData, $language]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('set_language_properties', [$this->limesurveyId, $surveyLocaleData, $language]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
+
     public function setParticipantProperties($tokenQueryProperties, array $tokenData)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('set_participant_properties',[$this->limesurveyId, $tokenQueryProperties, $tokenData]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('set_participant_properties', [$this->limesurveyId, $tokenQueryProperties, $tokenData]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
      * @param int $questionID
      * @param array $questionData
-     * @param string|NULL $language
+     * @param string|null $language
      * @return mixed
      */
-    public function setQuestionProperties(int $questionID, array $questionData, string $language = NULL)
+    public function setQuestionProperties(int $questionID, array $questionData, string $language = null)
     {
-        $request = $this->createDefaultRequest('set_question_properties',[$questionID, $questionData, $language]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('set_question_properties', [$questionID, $questionData, $language]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -674,9 +683,10 @@ trait LimesurveyRemoteTrait
      */
     public function setQuotaProperties(int $quotaId, array $quotaData)
     {
-        $request = $this->createDefaultRequest('set_quota_properties',[$quotaId, $quotaData]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('set_quota_properties', [$quotaId, $quotaData]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -685,13 +695,13 @@ trait LimesurveyRemoteTrait
      */
     public function setSurveyProperties(array $surveyData)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('set_survey_properties',[$this->limesurveyId, $surveyData]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('set_survey_properties', [$this->limesurveyId, $surveyData]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -700,13 +710,13 @@ trait LimesurveyRemoteTrait
      */
     public function updateResponse(array $responseData)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('update_response',[$this->limesurveyId, $responseData]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest('update_response', [$this->limesurveyId, $responseData]);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     /**
@@ -717,27 +727,27 @@ trait LimesurveyRemoteTrait
      */
     public function uploadFile(string $fieldName, string $fileName, string $fileContent)
     {
-        if(!$this->isLimesurveyIdSet())
-        {
-            return array('error'=>'Limesurvey Id not set');
+        if (! $this->isLimesurveyIdSet()) {
+            return ['error'=>'Limesurvey Id not set'];
         }
-        $request = $this->createDefaultRequest('upload_file',[$this->limesurveyId, $fieldName, $fileName, $fileContent]);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
-    }
+        $request = $this->createDefaultRequest('upload_file', [$this->limesurveyId, $fieldName, $fileName, $fileContent]);
+        $result = $this->client->call($request);
 
+        return $result;
+    }
 
     public function genericRemoteQuery(string $query, array $queryAttributes)
     {
-        $request = $this->createDefaultRequest($query,$queryAttributes);
-        $result = $this->client->send($request);
-        return $result->getRpcResult();
+        $request = $this->createDefaultRequest($query, $queryAttributes);
+        $result = $this->client->call($request);
+
+        return $result;
     }
 
     protected function createDefaultRequest($type, array $variables)
     {
         array_unshift($variables, $this->sessionKey);
-        return $this->client->request(1, $type, $variables);
-    }
 
+        return [$type, $variables];
+    }
 }
