@@ -2,12 +2,11 @@
 
 namespace Evently\LimeRemote;
 
+use Evently\LimeRemote\jsonRPCClient;
+use Evently\LimeRemote\Traits\LimesurveyRemoteCheckTrait;
 use Evently\LimeRemote\Traits\LimesurveyRemoteHelperTrait;
 use Evently\LimeRemote\Traits\LimesurveyRemoteTrait;
-use Evently\LimeRemote\Traits\LimesurveyRemoteCheckTrait;
-
 use Exception;
-use Graze\GuzzleHttp\JsonRpc\Client;
 
 class LimeRemote
 {
@@ -15,7 +14,13 @@ class LimeRemote
     use LimesurveyRemoteHelperTrait;
     use LimesurveyRemoteCheckTrait;
 
-    protected $username, $password, $url, $limesurveyId, $debug, $client, $sessionKey;
+    protected $username;
+    protected $password;
+    protected $url;
+    protected $limesurveyId;
+    protected $debug;
+    protected $client;
+    protected $sessionKey;
 
     /**
      * LimeRemote constructor.
@@ -25,20 +30,19 @@ class LimeRemote
      * @param null $limesurveyId
      * @param bool $debug
      */
-    public function __construct($username, $password, $url, $limesurveyId=null, $debug=false)
+    public function __construct($username, $password, $url, $limesurveyId = null, $debug = false)
     {
         $this->username = $username;
         $this->password = $password;
         $this->url = $url;
         $this->limesurveyId = $limesurveyId;
         $this->debug = $debug;
-        $this->client = Client::factory($this->url);
+        $this->client = new jsonRPCClient($this->url, $this->debug);
         $this->sessionKey = $this->getSessionKey();
     }
 
-    public function setLimesurveyId ($sid)
+    public function setLimesurveyId($sid)
     {
         $this->limesurveyId = $sid;
     }
-
 }

@@ -5,7 +5,7 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/evently/limeremote.svg?style=flat-square)](https://scrutinizer-ci.com/g/evently/limeremote)
 [![Total Downloads](https://img.shields.io/packagist/dt/evently/limeremote.svg?style=flat-square)](https://packagist.org/packages/evently/limeremote)
 
-A package to use the Limesurvey Remote Control with PHP, and Laravel in particular. Currently it supports all default remote control actions, and any actions you have added using the fantastic Extended Remote from Denis Chenu (https://gitlab.com/SondagesPro/RemoteControl/extendRemoteControl) using the genericRemoteQuery.  
+A package to use the Limesurvey Remote Control with PHP, and Laravel in particular. Currently it supports all default remote control actions, and any actions you have added using the fantastic Extended Remote from Denis Chenu (https://gitlab.com/SondagesPro/RemoteControl/extendRemoteControl) using the genericRemoteQuery.
 
 ## Installation
 
@@ -18,9 +18,10 @@ composer require evently/limeremote
 ## Usage
 
 ### Standard use
-``` php
+
+```php
 // First create a new remote with your user, password, remote control url and optionally a survey id.
-// The plugin creates a new remote and automatically gets a session key to communicate with Limesurvey 
+// The plugin creates a new remote and automatically gets a session key to communicate with Limesurvey
 $remote = new LimeRemote('admin', 'password', 'https://www.limesurvey.com/admin/remotecontrol',123456);
 
 // Use any of the functions, optionally passing variables to the remote
@@ -73,15 +74,17 @@ array:50 [▼
 
 */
 ```
+
 ### Helpers
+
 The package will also come with helpers that make it easier to use several of the remote control options. For now there is only one, to easily get the response timeline for the last X days:
 
-``` php
+```php
 
 $timeline = $remote->getLastNumDaysTimeline(8)
 
 /*
-will result in 
+will result in
 array:6 [▼
   "2019-01-01" => 23
   "2019-01-02" => 15
@@ -120,10 +123,10 @@ If you discover any security related issues, please email Stefan@evently.nl inst
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-
 [link-packagist]: https://packagist.org/packages/evently/limeremote
 [link-downloads]: https://packagist.org/packages/evently/limeremote
 [link-travis]: https://travis-ci.org/evently/limeremote
 [link-styleci]: https://styleci.io/repos/12345678
 [link-author]: https://github.com/evently
+
 [link-contributors]: ../../contributors]
