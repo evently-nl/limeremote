@@ -2,6 +2,8 @@
 
 namespace Evently\LimeRemote;
 
+use Exception;
+
 /*
                     COPYRIGHT
 
